@@ -1,0 +1,36 @@
+{
+  "total_files": 18003,
+  "valid_files": 18003,
+  "missing_files": 0,
+  "corrupted_files": 0,
+  "sample_rate_errors": 0,
+  "dataset_stats": {
+    "iwslt": {
+      "total": 12257,
+      "train": 7990,
+      "valid": 12257,
+      "dev": 2103,
+      "test": 2164
+    },
+    "common_voice": {
+      "total": 5746,
+      "train": 2215,
+      "valid": 5746,
+      "validation": 1780,
+      "test": 1751
+    }
+  },
+  "language_stats": {
+    "hi": 12257,
+    "mr": 5746
+  },
+  "duration_stats": {
+    "min": 0.6760625,
+    "max": 17.777375,
+    "total": 121823.42681249883,
+    "mean": 6.766840349525078,
+    "median": 6.4180625,
+    "std": 2.6392108616553687,
+    "samples_count": 18003
+  }
+}
