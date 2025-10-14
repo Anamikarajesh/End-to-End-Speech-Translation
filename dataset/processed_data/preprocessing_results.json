@@ -1,0 +1,11 @@
+{
+  "common_voice": {
+    "manifest_file": "processed_data\\common_voice_16khz\\common_voice_manifest.jsonl",
+    "total_samples": 5746,
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ]
+  }
+}

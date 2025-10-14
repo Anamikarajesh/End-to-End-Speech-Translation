@@ -1,0 +1,18 @@
+{
+  "processing_summary": {
+    "total_files_found": 5746,
+    "successfully_processed": 5746,
+    "failed_files": 0,
+    "success_rate": 100.0
+  },
+  "sample_rate_distribution": {
+    "32000": 5746
+  },
+  "duration_statistics": {
+    "min_duration": 1.9875,
+    "max_duration": 10.64365625,
+    "average_duration": 6.18733271514971,
+    "total_duration_hours": 9.87567049479173
+  },
+  "target_sample_rate": 16000
+}
