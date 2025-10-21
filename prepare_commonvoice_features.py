@@ -19,8 +19,8 @@ os.makedirs(FEAT_DIR, exist_ok=True)
 os.makedirs(MANIFESTS, exist_ok=True)  
 
 def convert_mp3_to_wav():
-    resampler = torchaudio.transforms.Resample(orig_freq=48000, new_freq=16000)
     files = [f for f in os.listdir(MP3_DIR) if f.endswith(".mp3")]
+    resamplers = {}
 
     for file in tqdm(files, desc="Converting MP3 → WAV"):
         src = os.path.join(MP3_DIR, file)
@@ -30,11 +30,18 @@ def convert_mp3_to_wav():
         try:
             wav, sr = torchaudio.load(src)
         except Exception:
-            wav_np, sr = sf.read(src, dtype="float32")
-            wav = torch.tensor(wav_np).unsqueeze(0)
+            wav_np, sr = sf.read(src, dtype="float32", always_2d=True)
+            wav = torch.from_numpy(wav_np.T)
         if sr != 16000:
-            wav = resampler(wav)
-        torchaudio.save(dst, wav, 16000)
+            if sr not in resamplers:
+                resamplers[sr] = torchaudio.transforms.Resample(orig_freq=sr, new_freq=16000)
+            wav = resamplers[sr](wav)
+            sr = 16000
+        wav_np = wav.transpose(0, 1).cpu().numpy()
+        if wav_np.shape[1] == 1:
+            wav_np = wav_np[:, 0]
+        # Prefer soundfile.write to avoid torchcodec dependency for torchaudio.save
+        sf.write(dst, wav_np, sr, subtype="PCM_16")
 
 mel_transform = torchaudio.transforms.MelSpectrogram(
     sample_rate=16000,
@@ -59,7 +66,11 @@ def extract_features():
         out_path = os.path.join(FEAT_DIR, fname.replace(".wav", ".npy"))
         if os.path.exists(out_path):
             continue
-        wav, sr = torchaudio.load(wav_path)
+        try:
+            wav_np, sr = sf.read(wav_path, dtype="float32", always_2d=True)
+            wav = torch.from_numpy(wav_np.T)
+        except Exception:
+            wav, sr = torchaudio.load(wav_path)
         if wav.shape[0] > 1:
             wav = wav.mean(0, keepdim=True)
         mel = mel_transform(wav)
