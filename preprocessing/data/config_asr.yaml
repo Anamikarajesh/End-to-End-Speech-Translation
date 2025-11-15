@@ -1,0 +1,17 @@
+# Audio feature configuration for speech-to-text preprocessing
+_parent: /home/user/anamika_ml_project/fairseq/examples/speech_to_text/config.yaml
+sample_rate: 16000
+feature_transforms:
+  _target_: fairseq.data.audio.feature_transforms.CompositeAudioFeatureTransform
+  transforms:
+    - _target_: fairseq.data.audio.feature_transforms.FbankFeat
+      num_mel_bins: 80
+      dither: 0.0
+    - _target_: fairseq.data.audio.feature_transforms.GlobalCMVN
+      stats_path: /home/user/anamika_ml_project/preprocessing/data/asr_combined_databin/cmvn.json
+    - _target_: fairseq.data.audio.feature_transforms.SpecAugment
+      freq_mask_n: 1
+      freq_mask_max_f: 27
+      time_mask_n: 1
+      time_mask_max_t: 100
+      time_mask_max_p: 1.0

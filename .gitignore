@@ -1,0 +1,39 @@
+# Project-specific large directories
+Dataset/
+dataset/
+training/
+output/
+log/
+
+# Alternative experiment outputs
+alternative/hf_cache/
+alternative/logs/
+
+# Checkpoints, binaries, archives
+*.pt
+*.ckpt
+*.bin
+*.npz
+*.tar
+*.tar.gz
+*.gz
+*.zip
+*.7z
+
+# Audio and feature dumps
+*.wav
+*.flac
+*.mp3
+*.ogg
+
+# Python cache/artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# Editor/OS clutter
+.vscode/
+.DS_Store
+*.swp

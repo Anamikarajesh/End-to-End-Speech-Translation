@@ -1,0 +1,21 @@
+sample_rate: 16000
+use_audio_input: true
+audio_root: ''
+vocab_filename: spm_6k.txt
+bpe_tokenizer:
+  bpe: sentencepiece
+  sentencepiece_model: spm_6k.model
+feature_transforms:
+  _target_: fairseq.data.audio.feature_transforms.CompositeAudioFeatureTransform
+  transforms:
+  - _target_: fairseq.data.audio.feature_transforms.FbankFeat
+    num_mel_bins: 80
+    sample_rate: 16000
+    dither: 0.0
+  - _target_: fairseq.data.audio.feature_transforms.UtteranceCMVN
+  - _target_: fairseq.data.audio.feature_transforms.SpecAugment
+    freq_mask_n: 1
+    freq_mask_max_f: 27
+    time_mask_n: 1
+    time_mask_max_t: 100
+    time_mask_max_p: 1.0

@@ -1,0 +1,3 @@
+# @package _group_
+_name: label_smoothed_cross_entropy
+label_smoothing: 0.1
