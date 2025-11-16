@@ -10,16 +10,13 @@ This project reproduces the full Marathi→Hindi speech translation pipeline—d
    - [2. SentencePiece Tokenizer (6k vocab)](#2-sentencepiece-tokenizer-6k-vocab)
    - [3. ASR Stage‑1 (Pretraining) Checkpoint](#3-asr-stage-1-pretraining-checkpoint)
    - [4. Stage‑2 Fine-Tuning Checkpoints & BLEU Logs](#4-stage-2-fine-tuning-checkpoints--bleu-logs)
-   - [5. Hugging Face SpeechEncoderDecoder Assets](#5-hugging-face-speechencoderdecoder-assets)
 3. [Quick Start](#quick-start)
 4. [Environment Setup](#environment-setup)
    - [Fairseq pipeline (`aml` env)](#fairseq-pipeline-aml-env)
-   - [Hugging Face pipeline (`newml` env)](#hugging-face-pipeline-newml-env)
 5. [Data Preparation](#data-preparation)
 6. [Training Workflows](#training-workflows)
    - [ASR Stage‑1 (Encoder warm-up)](#asr-stage-1-encoder-warm-up)
    - [Stage‑2 NMT Fine-Tuning (Fairseq)](#stage-2-nmt-fine-tuning-fairseq)
-   - [Hugging Face SpeechEncoderDecoder Fine-Tuning](#hugging-face-speechencoderdecoder-fine-tuning)
 7. [Evaluation and Inference](#evaluation-and-inference)
 8. [TensorBoard Visualization](#tensorboard-visualization)
 9. [Troubleshooting & Tips](#troubleshooting--tips)
@@ -317,11 +314,8 @@ Open `http://localhost:6006` to view training dynamics.
 ## Citation & Licensing
 
 - **Dataset**: Cite IWSLT 2023 shared task publications.
-- **Pretrained models**:
-  - [facebook/wav2vec2-large-xlsr-53](https://huggingface.co/facebook/wav2vec2-large-xlsr-53) (MIT License)
-  - [google/mt5-small](https://huggingface.co/google/mt5-small) (Apache 2.0)
 - **Fairseq**: MIT License (see `fairseq/LICENSE`).
-- **This project**: Choose your preferred license (e.g., MIT) and include it in `LICENSE`.
+- **This project**: My preferred `LICENSE` (MIT)
 
 ---
 ## Acknowledgements
