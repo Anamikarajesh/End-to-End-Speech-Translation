@@ -1,0 +1,26 @@
+conda run -n aml python -m fairseq_cli.train \
+  preprocessing/data/asr_combined_databin \
+  --save-dir training/asr_stage1 \
+  --task speech_to_text \
+  --train-subset train \
+  --valid-subset valid \
+  --max-source-positions 30000 \
+  --arch s2t_conformer \
+  --encoder-layers 16 \
+  --decoder-layers 6 \
+  --optimizer adam \
+  --adam-betas '(0.9, 0.98)' \
+  --lr 0.002 \
+  --lr-scheduler inverse_sqrt \
+  --warmup-updates 1000 \
+  --criterion label_smoothed_cross_entropy \
+  --label-smoothing 0.1 \
+  --dropout 0.15 \
+  --max-tokens 10000 \
+  --update-freq 32 \
+  --max-update 6000 \
+  --patience 10 \
+  --log-interval 10 \
+  --save-interval-updates 1000 \
+  --keep-last-epochs 5 \
+  --find-unused-parameters
