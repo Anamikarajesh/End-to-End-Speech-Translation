@@ -31,10 +31,6 @@ This project reproduces the full Marathi→Hindi speech translation pipeline—d
 
 ```
 anamika_ml_project/
-├── alternative/                 # Hugging Face workflow scripts & cache
-│   ├── hf_finetune.py
-│   ├── create_char_dict.py
-│   └── hf_cache/ (ignored)      # Large model downloads
 ├── dataset/                     # IWSLT audio + manifests (external download)
 ├── fairseq/                     # Fairseq source (recommend git submodule)
 ├── inference/                   # Translation & BLEU evaluation scripts
@@ -136,20 +132,6 @@ for pkg in st_stage2_v6a st_stage2_v6b; do
   tar -xzf "training/${pkg}.tar.gz" -C training
   rm -f "training/${pkg}.tar.gz"
 done
-```
-
-### 5. Hugging Face SpeechEncoderDecoder Assets
-Cache encoder/decoder models locally (optional but avoids repeated downloads):
-
-```bash
-python - <<'PY'
-from transformers import AutoModel, MT5ForConditionalGeneration, Wav2Vec2FeatureExtractor
-AutoModel.from_pretrained("facebook/wav2vec2-large-xlsr-53", cache_dir="alternative/hf_cache")
-MT5ForConditionalGeneration.from_pretrained("google/mt5-small", cache_dir="alternative/hf_cache")
-Wav2Vec2FeatureExtractor.from_pretrained("facebook/wav2vec2-large-xlsr-53", cache_dir="alternative/hf_cache")
-print("Models cached to alternative/hf_cache")
-PY
-```
 
 ---
 ## Quick Start
@@ -181,9 +163,6 @@ python inference/evaluate_bleu.py \
   --generate-file training/st_stage2_finetune_v6b_full_finetune/generate-test.txt \
   --output-json training/st_stage2_finetune_v6b_full_finetune/final_bleu_score/bleu.json
 
-# Optional Hugging Face fine-tuning
-conda activate newml
-python alternative/hf_finetune.py --fp16 --epochs 5 --batch_size 2 --grad_accumulation 16
 
 # Single-file inference
 audio_path=dataset/iwslt2023_mr-hi/test/wav/sample.wav
@@ -210,18 +189,6 @@ pip install -e fairseq
 pip install tensorboard sacrebleu sentencepiece sox soundfile
 pip install torch==2.1.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
 ```
-
-### Hugging Face pipeline (`newml` env)
-
-```bash
-conda create -n newml python=3.11 -y
-conda activate newml
-
-pip install torch==2.3.1 torchaudio==2.3.1 --index-url https://download.pytorch.org/whl/cu121
-pip install transformers datasets accelerate evaluate sentencepiece sacrebleu soundfile tensorboard
-```
-
----
 ## Data Preparation
 
 `preprocessing/scripts/prepare_s2t_databin.py` consumes TSV manifests and builds Fairseq bins:
@@ -283,24 +250,7 @@ Outputs: `training/st_stage2_finetune_v6b_full_finetune/`
 
 Logs and events stream to `log/tensorboard/st_stage2_v6b/`.
 
-### Hugging Face SpeechEncoderDecoder Fine-Tuning
 
-Script `alternative/hf_finetune.py` builds a `SpeechEncoderDecoderModel` with wav2vec2 encoder and mT5 decoder.
-
-```bash
-python alternative/hf_finetune.py \
-  --train_manifest preprocessing/data/iwslt_train_raw.tsv \
-  --valid_manifest preprocessing/data/iwslt_valid_raw.tsv \
-  --output_dir alternative/hf_finetune_v1 \
-  --encoder_model facebook/wav2vec2-large-xlsr-53 \
-  --decoder_model google/mt5-small \
-  --batch_size 2 \
-  --grad_accumulation 16 \
-  --epochs 5 \
-  --learning_rate 1e-4 \
-  --num_workers 4 \
-  --fp16
-```
 
 Outputs:
 ```
@@ -381,4 +331,4 @@ Open `http://localhost:6006` to view training dynamics.
 - Hugging Face team for open-source models and infrastructure.
 - Contributors and collaborators who tested or reviewed this pipeline.
 
-Questions or issues? Open an issue on GitHub or reach out directly. Happy translating! 🎧🡒🗣️🡒📝
+Questions or issues? Open an issue on GitHub or reach out directly. Happy translating!
