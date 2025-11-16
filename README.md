@@ -1,6 +1,6 @@
 # End-to-End Speech Translation (Marathi → Hindi)
 
-This project reproduces the full Marathi→Hindi speech translation pipeline—data acquisition, preprocessing, Fairseq-based pretraining/fine-tuning, Hugging Face experiments, inference, and evaluation scripts. The repository keeps only code and lightweight configs; large data/model artifacts are downloaded on demand using the scripts described below.
+This project reproduces the full Marathi→Hindi speech translation pipeline—data acquisition, preprocessing, Fairseq-based pretraining/fine-tuning, inference, and evaluation scripts. The repository keeps only code and lightweight configs; large data/model artifacts are downloaded on demand using the scripts described below.
 
 ---
 ## Table of Contents
