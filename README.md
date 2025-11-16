@@ -55,7 +55,6 @@ Large directories (`dataset/`, `training/`, `output/`, `log/`, `alternative/hf_c
 | SentencePiece tokenizer (6k) | <5 MB | Included / rebuild script | `spm_6k.model` + vocab
 | ASR Stage‑1 checkpoint | ~1.2 GB | Hosted artifact (see script) | Warm-start encoder
 | ST Stage‑2 checkpoints | ~5 GB | Hosted artifact | Decoder warm-up + full fine-tune
-| Hugging Face models | ~6 GB | Hugging Face Hub cache | Download automatically (`wav2vec2`, `mt5`)
 
 ### 1. IWSLT 2023 Marathi–Hindi Dataset
 Use `scripts/download_dataset.sh` to mirror your storage (replace URLs with accessible sources):
